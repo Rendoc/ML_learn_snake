@@ -12,7 +12,7 @@ BODY_WIDTH = 15
 BODY_HEIGHT = 15
 SPACE_BETWEEN_PARTS = 1
 
-GRID_SIZE = 600
+GRID_SIZE = 480
 
 def main():
 
@@ -32,7 +32,7 @@ def main():
     delta_y = 0
 
     #initial cherry
-    cherry = Body((randrange(1, GRID_SIZE/BODY_WIDTH, 1)*BODY_WIDTH), (randrange(1, GRID_SIZE/BODY_WIDTH, 1)*BODY_WIDTH), RED)
+    cherry = Body(get_rand_in_grid(), get_rand_in_grid(), RED)
     snake.sprite_list.add(cherry)
 
     while snake.alive:
@@ -42,7 +42,6 @@ def main():
             if event.type == pygame.QUIT:
                 # you killed the snake by quitting
                 snake.alive = False
-
             if event.type == pygame.KEYDOWN:
                 # initial speed
                 # print(event.key)
@@ -69,9 +68,9 @@ def main():
         snake.alive = not(is_colisions(snake))
 
         # spawn cherry
-        # TODO ONLY SPAWN CHERRY EXACTLY ON THE GRID
         if cherry_eaten:
-            cherry = Body((randrange(1, GRID_SIZE/BODY_WIDTH, 1)*BODY_WIDTH), (randrange(1, GRID_SIZE/BODY_WIDTH, 1)*BODY_WIDTH), RED)
+            cherry = Body(get_rand_in_grid(), get_rand_in_grid(), RED)
+            # print(f"cherry {cherry}")
             snake.sprite_list.add(cherry)
         # clean screen:
         grid.fill(BLACK)
@@ -89,7 +88,7 @@ def main():
 def is_colisions(snake: Snake):
     # fix colisions with wall
     def _colisions_with_wall():
-        return snake.body_parts[0].rect.x <= 0 or snake.body_parts[0].rect.x >= GRID_SIZE-BODY_WIDTH or snake.body_parts[0].rect.y <= 0 or snake.body_parts[0].rect.y >= GRID_SIZE-BODY_WIDTH
+        return snake.body_parts[0].rect.x <= 0 or snake.body_parts[0].rect.x >= GRID_SIZE-(BODY_WIDTH+SPACE_BETWEEN_PARTS) or snake.body_parts[0].rect.y <= 0 or snake.body_parts[0].rect.y >= GRID_SIZE-(BODY_WIDTH+SPACE_BETWEEN_PARTS)
     
     def _colisions_with_itself():
         head = snake.body_parts[0]
@@ -98,9 +97,10 @@ def is_colisions(snake: Snake):
             if parts.rect.colliderect(head):
                 return True
         return False
-    # print(_colisions_with_itself() or _colisions_with_wall())
     return _colisions_with_itself() or _colisions_with_wall()
-    
+
+def get_rand_in_grid():
+    return randrange(1, GRID_SIZE/(BODY_WIDTH+SPACE_BETWEEN_PARTS), 1)*(BODY_WIDTH+SPACE_BETWEEN_PARTS)
     
 if __name__ == "__main__":
     main()

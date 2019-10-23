@@ -8,7 +8,7 @@ BODY_WIDTH = 15
 BODY_HEIGHT = 15
 SPACE_BETWEEN_PARTS = 1
 
-GRID_SIZE = 600
+GRID_SIZE = 480
 
 class Body(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, color=WHITE):
@@ -26,8 +26,8 @@ class Body(pygame.sprite.Sprite):
 
 
 class Snake:
-    initial_pos_x = 500
-    initial_pos_y = 60
+    initial_pos_x = 240
+    initial_pos_y = 240
 
     def __init__(self, sprite_list, initial_size, alive = True):
         self.body_parts = []
