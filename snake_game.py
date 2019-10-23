@@ -14,6 +14,8 @@ SPACE_BETWEEN_PARTS = 1
 
 GRID_SIZE = 480
 
+SPEED = 8 # higher = faster
+
 def main():
 
     pygame.init()
@@ -38,25 +40,21 @@ def main():
     while snake.alive:
         cherry_eaten = False
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                # you killed the snake by quitting
-                snake.alive = False
-            if event.type == pygame.KEYDOWN:
-                # initial speed
-                # print(event.key)
-                if event.key == pygame.K_a:
-                    delta_x = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * -1
-                    delta_y = 0
-                if event.key == pygame.K_d:
-                    delta_x = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * 1
-                    delta_y = 0
-                if event.key == pygame.K_w:
-                    delta_x = 0
-                    delta_y = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * -1
-                if event.key == pygame.K_s:
-                    delta_x = 0
-                    delta_y = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * 1
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         snake.alive = False
+        #     if event.type == pygame.KEYDOWN:
+        #         if event.key == pygame.K_a:
+        #             delta_x, delta_y = go_left()
+        #         if event.key == pygame.K_d:
+        #             delta_x, delta_y = go_right()
+        #         if event.key == pygame.K_w:
+        #             delta_x, delta_y = go_up()
+        #         if event.key == pygame.K_s:
+        #            delta_x, delta_y = go_down()
+
+        #MAGIC AI THING
+        delta_x, delta_y = get_input(snake)
 
         if snake.body_parts[0].rect.colliderect(cherry):
             snake.sprite_list.remove(cherry)
@@ -81,7 +79,7 @@ def main():
         # turn on screen
         pygame.display.flip()
 
-        clock.tick(10)
+        clock.tick(SPEED)
     print("END")
     pygame.quit()
 
@@ -101,6 +99,42 @@ def is_colisions(snake: Snake):
 
 def get_rand_in_grid():
     return randrange(1, GRID_SIZE/(BODY_WIDTH+SPACE_BETWEEN_PARTS), 1)*(BODY_WIDTH+SPACE_BETWEEN_PARTS)
+
+def go_left():
+    delta_x = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * -1
+    delta_y = 0
+    return delta_x, delta_y
+
+def go_right():
+    delta_x = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * 1
+    delta_y = 0
+    return delta_x, delta_y
+
+def go_up():
+    delta_x = 0
+    delta_y = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * -1
+    return delta_x, delta_y
+
+def go_down():
+    delta_x = 0
+    delta_y = (BODY_WIDTH + SPACE_BETWEEN_PARTS) * 1
+    return delta_x, delta_y
+
+
+
+def get_input(snake):
     
+    rand_number = randrange(0, 4, 1)
+    if rand_number == 0:
+        delta_x, delta_y = go_down()
+    if rand_number == 1:
+         delta_x, delta_y = go_left()
+    if rand_number == 2:
+         delta_x, delta_y = go_right()
+    if rand_number == 3:
+         delta_x, delta_y = go_up()
+
+    return delta_x, delta_y
+
 if __name__ == "__main__":
     main()
