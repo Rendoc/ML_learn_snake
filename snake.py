@@ -46,6 +46,8 @@ class Snake:
             self.body_parts.append(body)
             self.sprite_list.add(body)
 
+    def get_score(self):
+        return len(self.body_parts)
 
     def move(self, delta_x, delta_y, cherry):
         if not cherry:

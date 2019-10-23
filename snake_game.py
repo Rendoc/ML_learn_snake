@@ -14,7 +14,8 @@ SPACE_BETWEEN_PARTS = 1
 
 GRID_SIZE = 480
 
-SPEED = 8 # higher = faster
+SPEED = 16 # higher = faster
+INITIAL_SNAKE_SIZE = 3
 
 def main():
 
@@ -28,7 +29,7 @@ def main():
 
     clock = pygame.time.Clock()
     
-    snake = Snake(sprite_list, initial_size=2)
+    snake = Snake(sprite_list, initial_size=INITIAL_SNAKE_SIZE)
 
     delta_x = BODY_WIDTH + SPACE_BETWEEN_PARTS
     delta_y = 0
@@ -80,7 +81,7 @@ def main():
         pygame.display.flip()
 
         clock.tick(SPEED)
-    print("END")
+    print(f"END score: {snake.get_score()}")
     pygame.quit()
 
 def is_colisions(snake: Snake):
@@ -137,4 +138,5 @@ def get_input(snake):
     return delta_x, delta_y
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
