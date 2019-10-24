@@ -146,7 +146,7 @@ class SnakeGame():
 
 if __name__ == "__main__":
     #ml game
-    ml_game = SnakeGame(GRID_SIZE, render_ui = False)
+    ml_game = SnakeGame(GRID_SIZE, render_ui = True)
 
     print(ml_game.start())
     n_moves = 100
