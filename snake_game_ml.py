@@ -146,16 +146,13 @@ class SnakeGame():
 
 if __name__ == "__main__":
     #ml game
-
-    ml_game = SnakeGame(GRID_SIZE, render_ui = True)
+    ml_game = SnakeGame(GRID_SIZE, render_ui = False)
 
     print(ml_game.start())
     n_moves = 100
     for _ in range(n_moves):
         input = randrange(0, 4, 1)
-        # print(input)
         is_done, score, snake, cherry = ml_game.tick(input)
         if is_done:
             break
-        
     pygame.quit()

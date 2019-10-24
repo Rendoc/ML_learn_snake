@@ -57,6 +57,10 @@ class Snake:
         head_pos_x = self.body_parts[0].rect.x + delta_x
         head_pos_y = self.body_parts[0].rect.y + delta_y
 
+        #current vector
+        self.delta_x = delta_x
+        self.delta_y = delta_y
+
         head = Body(head_pos_x, head_pos_y)
         self.body_parts.insert(0, head)
         self.sprite_list.add(head)
